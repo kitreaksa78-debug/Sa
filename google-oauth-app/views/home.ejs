@@ -1,0 +1,14 @@
+<%- include('partials/header', { title: 'Home' }) %>
+
+<section class="hero">
+  <h1>Welcome<%= user ? ', ' + (user.name || 'user') : '' %>!</h1>
+  <p>A simple web app demonstrating Google OAuth login with Express, EJS, SQLite, and Passport.js.</p>
+
+  <% if (user) { %>
+    <a href="/profile" class="btn btn-primary">View your profile</a>
+  <% } else { %>
+    <a href="/auth/google" class="btn btn-google">Login with Google</a>
+  <% } %>
+</section>
+
+<%- include('partials/footer') %>

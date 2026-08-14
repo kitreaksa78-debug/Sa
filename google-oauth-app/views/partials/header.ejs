@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= typeof title !== 'undefined' ? title : 'Google OAuth App' %></title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="/" class="brand">Google OAuth App</a>
+      <nav class="nav-links">
+        <a href="/" class="nav-link">Home</a>
+        <% if (user) { %>
+          <a href="/profile" class="nav-link">Profile</a>
+          <form action="/auth/logout" method="POST" class="inline">
+            <button type="submit" class="btn btn-outline">Logout</button>
+          </form>
+        <% } else { %>
+          <a href="/auth/google" class="btn btn-google">Login with Google</a>
+        <% } %>
+      </nav>
+    </div>
+  </header>
+  <main class="container content">
