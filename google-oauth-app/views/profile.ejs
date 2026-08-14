@@ -1,0 +1,21 @@
+<%- include('partials/header', { title: 'Profile' }) %>
+
+<section class="profile">
+  <h1>Your Profile</h1>
+  <div class="profile-card">
+    <% if (user.avatar) { %>
+      <img src="<%= user.avatar %>" alt="Avatar" class="avatar" referrerpolicy="no-referrer" />
+    <% } %>
+    <div class="profile-info">
+      <h2><%= user.name || 'No name' %></h2>
+      <p><strong>Email:</strong> <%= user.email || 'N/A' %></p>
+      <p><strong>Google ID:</strong> <code><%= user.google_id %></code></p>
+      <p><strong>Member since:</strong> <%= user.created_at %></p>
+    </div>
+  </div>
+  <form action="/auth/logout" method="POST" class="logout-form">
+    <button type="submit" class="btn btn-outline">Logout</button>
+  </form>
+</section>
+
+<%- include('partials/footer') %>
