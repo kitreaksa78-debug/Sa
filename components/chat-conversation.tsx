@@ -1,7 +1,7 @@
 'use client'
 
 import { useChat } from '@ai-sdk/react'
-import { DefaultChatTransport, type UIMessage } from 'ai'
+import { DefaultChatTransport, type FileUIPart, type UIMessage } from 'ai'
 import { useEffect, useRef } from 'react'
 import { RefreshCw, TriangleAlert } from 'lucide-react'
 import { MessageItem, ThinkingIndicator } from '@/components/message-item'
@@ -91,7 +91,7 @@ export function ChatConversation({
       )}
 
       <ChatComposer
-        onSend={(text) => sendMessage({ text })}
+        onSend={(text, files) => sendMessage({ text, files: files as FileUIPart[] })}
         onStop={stop}
         isStreaming={isStreaming}
       />

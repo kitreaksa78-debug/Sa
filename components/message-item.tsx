@@ -1,6 +1,6 @@
 'use client'
 
-import type { UIMessage } from 'ai'
+import type { FileUIPart, UIMessage } from 'ai'
 import { Sparkles } from 'lucide-react'
 import { Markdown } from '@/components/markdown'
 
@@ -10,15 +10,40 @@ function getText(message: UIMessage): string {
     .join('')
 }
 
+function getImages(message: UIMessage): FileUIPart[] {
+  return message.parts.filter(
+    (part): part is FileUIPart =>
+      part.type === 'file' && part.mediaType.startsWith('image/'),
+  )
+}
+
 export function MessageItem({ message }: { message: UIMessage }) {
   const isUser = message.role === 'user'
   const text = getText(message)
+  const images = isUser ? getImages(message) : []
 
   if (isUser) {
     return (
       <div className="flex justify-end">
-        <div className="max-w-[85%] rounded-3xl rounded-br-lg bg-secondary px-4 py-2.5 text-[15px] leading-7 text-secondary-foreground whitespace-pre-wrap">
-          {text}
+        <div className="flex max-w-[85%] flex-col items-end gap-2">
+          {images.length > 0 && (
+            <div className="flex flex-wrap justify-end gap-2">
+              {images.map((img, i) => (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  key={`${img.url}-${i}`}
+                  src={img.url}
+                  alt={img.filename ?? 'Uploaded image'}
+                  className="max-h-48 rounded-2xl rounded-br-lg border border-border object-cover"
+                />
+              ))}
+            </div>
+          )}
+          {text && (
+            <div className="rounded-3xl rounded-br-lg bg-secondary px-4 py-2.5 text-[15px] leading-7 text-secondary-foreground whitespace-pre-wrap">
+              {text}
+            </div>
+          )}
         </div>
       </div>
     )
